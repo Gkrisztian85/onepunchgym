@@ -1,76 +1,252 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KatiFit Gym</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>onepunchgym – Testépítés • Erő • Forma</title>
+  <meta name="description" content="onepunchgym – személyre szabott testépítő edzéstervek és táplálkozási útmutató. Erő, forma, önbizalom." />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    body {margin:0;font-family:Arial, sans-serif;background:#f8fafc;color:#0f172a;}
-    header {background:#0b0b0f;color:#fff;padding:20px;position:sticky;top:0;}
-    nav a {color:#fff;margin:0 10px;text-decoration:none;}
-    .hero {height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-      background:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
-      color:#fff;text-align:center;}
-    .btn {padding:12px 20px;border-radius:9999px;font-weight:700;margin:5px;display:inline-block;}
-    .btn-primary {background:#E11D48;color:#fff;}
-    .btn-primary:hover {background:#BE123C;}
-    .btn-secondary {border:2px solid #0EA5E9;color:#0EA5E9;}
-    .btn-secondary:hover {background:#0EA5E9;color:#fff;}
-    section {padding:60px 20px;max-width:1000px;margin:auto;}
-    .cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
-    .card {background:#fff;border:1px solid #e5e7eb;padding:20px;border-radius:12px;}
-    footer {background:#fff;border-top:1px solid #e5e7eb;padding:20px;text-align:center;color:#475569;}
+    :root{
+      --primary:#E11D48;        /* málna/piros */
+      --primary-d:#BE123C;      /* hover */
+      --secondary:#0EA5E9;      /* kék */
+      --dark:#0B0B0F;
+      --text:#0F172A;
+      --muted:#475569;
+      --light:#F8FAFC;
+      --maxw:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    img{display:block;max-width:100%;height:auto}
+    a{color:inherit;text-decoration:none}
+    section{padding:80px 0}
+    @media (max-width:991px){section{padding:64px 0}}
+    @media (max-width:767px){section{padding:48px 0}}
+
+    /* Layout helpers */
+    .container{max-width:var(--maxw);margin:auto;padding:0 24px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    @media (max-width:991px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:767px){.grid-3{grid-template-columns:1fr}}
+
+    /* Typography – 3 heading + 1 paragraph */
+    .h1{font-size:48px;line-height:1.15;font-weight:800;letter-spacing:-0.01em;color:#fff;margin:0 0 12px}
+    .h2{font-size:36px;line-height:1.2;font-weight:700;color:var(--text);margin:0 0 12px}
+    .h3{font-size:24px;line-height:1.25;font-weight:700;color:var(--text);margin:0 0 8px}
+    .p{font-size:18px;line-height:1.6;color:var(--text);margin:0 0 16px}
+
+    /* Buttons – primary/secondary + hover */
+    .btn{display:inline-block;padding:12px 20px;border-radius:9999px;font-weight:700;border:2px solid transparent;transition:.2s transform,.2s box-shadow,.2s background-color,.2s color}
+    .btn:active{transform:translateY(0)}
+    .btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 18px rgba(225,29,72,.25)}
+    .btn-primary:hover{background:var(--primary-d);transform:translateY(-1px);box-shadow:0 10px 24px rgba(225,29,72,.35)}
+    .btn-secondary{background:transparent;color:var(--secondary);border-color:var(--secondary)}
+    .btn-secondary:hover{background:var(--secondary);color:#fff}
+
+    /* Navbar */
+    .nav-wrap{position:sticky;top:0;z-index:100;background:rgba(11,11,15,.8);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:12px 24px}
+    .brand{color:#fff;font-weight:800;font-size:20px;letter-spacing:.02em}
+    .nav-links{display:flex;gap:20px;align-items:center}
+    .nav-links a{color:#e5e7eb;font-weight:600;opacity:.9}
+    .nav-links a:hover{opacity:1}
+    .nav-cta{margin-left:8px}
+    .burger{display:none;width:40px;height:40px;border:1px solid rgba(255,255,255,.18);border-radius:10px;color:#fff;background:transparent;cursor:pointer}
+    @media (max-width:991px){
+      .burger{display:block}
+      .nav-links{position:fixed;left:0;right:0;top:64px;bottom:auto;background:#0B0B0F;flex-direction:column;padding:24px;transform:translateY(-120%);transition:.25s;gap:16px;border-top:1px solid rgba(255,255,255,.06)}
+      .nav-links.open{transform:translateY(0)}
+      .nav-cta{width:100%;text-align:center}
+    }
+
+    /* Hero */
+    .hero{min-height:90vh;position:relative;background:
+      linear-gradient(120deg,rgba(11,11,15,.85) 0%, rgba(11,11,15,.3) 60%, rgba(11,11,15,0) 100%),
+      url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1800&auto=format&fit=crop') center/cover no-repeat;}
+    .hero .container{min-height:90vh;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:24px}
+    .lead{color:#e2e8f0;max-width:640px}
+    @media (max-width:991px){
+      .hero .container{grid-template-columns:1fr}
+      .h1{font-size:40px}
+    }
+    @media (max-width:767px){.h1{font-size:34px}}
+
+    /* Cards section */
+    .cards{background:var(--light)}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:.2s transform,.2s box-shadow}
+    .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(2,8,23,.08)}
+    .bullets{margin:0;padding-left:18px;color:var(--muted)}
+    .price{font-size:22px;font-weight:800;color:var(--text);margin-top:2px}
+    .card .btn{margin-top:auto}
+
+    /* About / Results */
+    .about .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
+    .tag{display:inline-block;padding:6px 10px;border-radius:9999px;background:rgba(14,165,233,.15);color:var(--secondary);font-weight:700;margin-bottom:12px}
+    .about img{border-radius:16px;aspect-ratio:4/3;object-fit:cover}
+    @media (max-width:991px){.about .grid{grid-template-columns:1fr}}
+
+    /* Contact */
+    .form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form textarea{grid-column:1/-1;min-height:140px}
+    .input, .select, textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #e5e7eb;font-size:16px}
+    .input:focus, .select:focus, textarea:focus{outline:2px solid rgba(14,165,233,.35);border-color:var(--secondary)}
+    @media (max-width:767px){.form{grid-template-columns:1fr}}
+
+    /* Footer */
+    .footer{padding:32px 0;border-top:1px solid #e5e7eb;color:var(--muted);font-size:14px;background:#fff}
   </style>
 </head>
-<body>
+<body id="top">
 
-<header>
-  <nav>
-    <a href="#rolam">Rólam</a>
-    <a href="#csomagok">Csomagok</a>
-    <a href="#kapcsolat">Kapcsolat</a>
-  </nav>
-</header>
+  <!-- NAVBAR -->
+  <div class="nav-wrap" role="navigation" aria-label="Fő navigáció">
+    <div class="container nav">
+      <a href="#top" class="brand">onepunchgym</a>
 
-<section class="hero">
-  <h1>Erő, forma, önbizalom</h1>
-  <p>Személyre szabott edzéstervek és táplálkozási tippek.</p>
-  <a href="#kapcsolat" class="btn btn-primary">Ingyenes konzultáció</a>
-  <a href="#csomagok" class="btn btn-secondary">Csomagok</a>
-</section>
+      <nav class="nav-links" id="nav">
+        <a href="#rolam">Rólam</a>
+        <a href="#csomagok">Csomagok</a>
+        <a href="#eredmenyek">Eredmények</a>
+        <a href="#kapcsolat">Kapcsolat</a>
+        <a href="#kapcsolat" class="btn btn-primary nav-cta">Időpontot kérek</a>
+      </nav>
 
-<section id="csomagok">
-  <h2>Csomagok</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Alap</h3>
-      <p>25 000 Ft / alkalom</p>
-    </div>
-    <div class="card">
-      <h3>Haladó</h3>
-      <p>69 000 Ft / hó</p>
-    </div>
-    <div class="card">
-      <h3>Versenyfelkészítés</h3>
-      <p>149 000 Ft / ciklus</p>
+      <button class="burger" aria-label="Menü" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
     </div>
   </div>
-</section>
 
-<section id="rolam">
-  <h2>Rólam</h2>
-  <p>Több éves tapasztalat, testépítő háttér és valódi eredmények.</p>
-</section>
+  <!-- HERO -->
+  <section class="hero" aria-label="Bevezető">
+    <div class="container">
+      <div>
+        <h1 class="h1">Erő, forma, önbizalom – <br/>személyre szabott testépítés a onepunchgymben.</h1>
+        <p class="p lead">Professzionális edzéstervek és táplálkozási protokoll nőknek és férfiaknak. Online és személyesen is, mérhető eredményekkel.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+          <a href="#kapcsolat" class="btn btn-primary">Ingyenes konzultáció</a>
+          <a href="#eredmenyek" class="btn btn-secondary">Eredmények</a>
+        </div>
+      </div>
+      <div aria-hidden="true"></div>
+    </div>
+  </section>
 
-<section id="kapcsolat">
-  <h2>Kapcsolat</h2>
-  <p>Email: <a href="mailto:info@katifit.hu">info@katifit.hu</a></p>
-</section>
+  <!-- CSOMAGOK / KÁRTYÁK -->
+  <section class="cards" id="csomagok" aria-label="Csomagok">
+    <div class="container">
+      <h2 class="h2">Csomagok</h2>
+      <p class="p" style="color:var(--muted);margin-bottom:24px">Válaszd ki a célodhoz illő programot. Minden csomag személyre szabottan készül és haladáskövetéssel jár.</p>
 
-<footer>
-  <p>© 2025 KatiFit Gym</p>
-</footer>
+      <div class="grid-3">
+        <article class="card">
+          <h3 class="h3">Alap</h3>
+          <ul class="bullets">
+            <li>Heti edzésterv</li>
+            <li>Makrók és étrend alapok</li>
+            <li>Chat támogatás</li>
+          </ul>
+          <div class="price">25 000 Ft / alkalom</div>
+          <a href="#kapcsolat" class="btn btn-primary" aria-label="Jelentkezés Alap csomagra">Időpontot kérek</a>
+        </article>
 
+        <article class="card">
+          <h3 class="h3">Haladó</h3>
+          <ul class="bullets">
+            <li>Teljes havi program</li>
+            <li>Heti check-in & haladás</li>
+            <li>Technika videóelemzés</li>
+          </ul>
+          <div class="price">69 000 Ft / hó</div>
+          <a href="#kapcsolat" class="btn btn-primary" aria-label="Jelentkezés Haladó csomagra">Jelentkezem</a>
+        </article>
+
+        <article class="card">
+          <h3 class="h3">Versenyfelkészítés</h3>
+          <ul class="bullets">
+            <li>Szakmai protokoll</li>
+            <li>Pózolás & színpad</li>
+            <li>Peak week támogatás</li>
+          </ul>
+          <div class="price">149 000 Ft / ciklus</div>
+          <a href="#kapcsolat" class="btn btn-secondary" aria-label="Időpont egyeztetés versenyfelkészítésre">Időpont egyeztetés</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- RÓLAM / EREDMÉNYEK (tetszőleges szakasz) -->
+  <section class="about" id="rolam" aria-label="Rólam és eredmények">
+    <div class="container">
+      <div class="grid" style="display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1400&auto=format&fit=crop" alt="Edzés a onepunchgymben">
+        <div>
+          <span class="tag">Rólam</span>
+          <h2 class="h2">Szigorú szakmai alapok, emberi támogatás</h2>
+          <p class="p">Több éves kliensmunka és testépítő háttér. Célom, hogy fenntartható szokásokkal legyél erős és magabiztos – nem csak a tükörnek, hanem a teljesítményednek is.</p>
+          <ul class="bullets">
+            <li>IFBB/verseny tapasztalat</li>
+            <li>Táplálkozási edukáció és makrótervezés</li>
+            <li>Online és személyes edzések</li>
+          </ul>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+            <a href="#eredmenyek" class="btn btn-secondary">További eredmények</a>
+            <a href="#kapcsolat" class="btn btn-primary">Konzultáció</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EREDMÉNYEK mini-szekció (scroll anchorhez) -->
+  <section id="eredmenyek" aria-label="Ügyfél-eredmények">
+    <div class="container">
+      <h2 class="h2">Ügyfél-eredmények</h2>
+      <p class="p" style="color:var(--muted)">Előtte–utána fotók és esettörténetek hamarosan. Addig is egyeztessünk célokról és időbeosztásról.</p>
+      <a href="#kapcsolat" class="btn btn-primary">Időpont egyeztetés</a>
+    </div>
+  </section>
+
+  <!-- KAPCSOLAT -->
+  <section id="kapcsolat" aria-label="Kapcsolat">
+    <div class="container">
+      <h2 class="h2">Kapcsolat</h2>
+      <p class="p">Írj üzenetet vagy kérj visszahívást – 24 órán belül válaszolunk.</p>
+
+      <!-- Figyelem: GitHub Pages nem küld e-mailt; használj mailto-t vagy később form backend-et -->
+      <form class="form" action="mailto:info@onepunchgym.hu" method="post" enctype="text/plain">
+        <input class="input" type="text" name="name" placeholder="Név" required>
+        <input class="input" type="email" name="email" placeholder="E-mail" required>
+        <input class="input" type="tel" name="phone" placeholder="Telefonszám">
+        <select class="select" name="goal" aria-label="Cél">
+          <option value="">Célod</option>
+          <option>Izomépítés</option>
+          <option>Zsírégetés</option>
+          <option>Versenyfelkészítés</option>
+        </select>
+        <textarea name="message" placeholder="Üzenet"></textarea>
+        <div style="grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-primary" type="submit">Üzenet küldése</button>
+          <a class="btn btn-secondary" href="tel:+3612345678">Hívás indítása</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>© <span id="y"></span> onepunchgym</div>
+      <div style="color:var(--muted)"><a href="#top">Vissza az elejére ↑</a></div>
+    </div>
+  </footer>
+
+  <!-- Minimal JS: burger + évszám -->
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
