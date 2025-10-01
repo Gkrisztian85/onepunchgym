@@ -120,17 +120,28 @@
 }
 .nav{
   display:flex; align-items:center; justify-content:space-between; gap:24px;
-  padding:12px 24px;
+  padding:8px 24px;
 }
 
 .brand-wrap{ display:flex; align-items:center; gap:10px; }
-.brand-logo{
-  height:42px; width:auto; display:block;
-  image-rendering:-webkit-optimize-contrast;
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+.brand-logo {
+  height: 68px;       /* nagyobb logó desktopon */
+  width: auto;
+  display: block;
   filter: drop-shadow(0 1px 2px rgba(0,0,0,.55));
   transition: transform .2s ease, filter .2s ease;
 }
+
+/* Tablet */
+@media (max-width: 991px) {
+  .brand-logo { height: 54px; }
+}
+
+/* Mobil */
+@media (max-width: 767px) {
+  .brand-logo { height: 42px; }
+}
+
 .brand-logo:hover{ transform:translateY(-1px) scale(1.04); filter: drop-shadow(0 3px 6px rgba(0,0,0,.6)); }
 
 .nav-links{ display:flex; align-items:center; gap:20px; }
