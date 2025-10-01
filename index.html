@@ -104,29 +104,122 @@
 
     /* Footer */
     .footer{padding:32px 0;border-top:1px solid #e5e7eb;color:var(--muted);font-size:14px;background:#fff}
+
+    /* === ONEPUNCHGYM NAV – DIAMOND EDITION === */
+.nav-wrap{
+  position:sticky; top:0; z-index:1000;
+  background:rgba(11,11,15,.80);
+  backdrop-filter: blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition: box-shadow .25s ease, background-color .25s ease, border-color .25s ease;
+}
+.nav-wrap.scrolled{
+  background:rgba(11,11,15,.92);
+  box-shadow:0 10px 30px rgba(2,8,23,.25);
+  border-color: rgba(255,255,255,.08);
+}
+.nav{
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+  padding:12px 24px;
+}
+
+.brand-wrap{ display:flex; align-items:center; gap:10px; }
+.brand-logo{
+  height:42px; width:auto; display:block;
+  image-rendering:-webkit-optimize-contrast;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.55));
+  transition: transform .2s ease, filter .2s ease;
+}
+.brand-logo:hover{ transform:translateY(-1px) scale(1.04); filter: drop-shadow(0 3px 6px rgba(0,0,0,.6)); }
+
+.nav-links{ display:flex; align-items:center; gap:20px; }
+.nav-link{
+  color:#e5e7eb; font-weight:700; letter-spacing:.01em; position:relative; padding:8px 2px;
+  transition: color .2s ease;
+}
+.nav-link:hover{ color:#fff; }
+.nav-link:focus-visible{
+  outline:2px solid #0EA5E9; outline-offset:3px; border-radius:6px;
+}
+.nav-link::after{
+  content:""; position:absolute; left:0; bottom:0; height:2px; width:0;
+  background:linear-gradient(90deg,#E11D48,#0EA5E9);
+  transition:width .22s ease;
+}
+.nav-link:hover::after{ width:100%; }
+
+.nav-cta{
+  margin-left:8px;
+}
+
+/* Burger */
+.burger{
+  display:none; width:42px; height:42px; border:1px solid rgba(255,255,255,.18);
+  border-radius:10px; background:transparent; cursor:pointer;
+  position:relative; transition:background .2s ease, border-color .2s ease;
+}
+.burger:focus-visible{ outline:2px solid #0EA5E9; outline-offset:3px; }
+.burger span, .burger::before, .burger::after{
+  content:""; position:absolute; left:10px; right:10px; height:2px; background:#fff; border-radius:2px; transition:transform .2s ease, opacity .2s ease;
+}
+.burger span{ top:50%; transform:translateY(-50%); }
+.burger::before{ top:12px; }
+.burger::after{ bottom:12px; }
+.burger[aria-expanded="true"] span{ opacity:0; }
+.burger[aria-expanded="true"]::before{ transform: translateY(8px) rotate(45deg); }
+.burger[aria-expanded="true"]::after{ transform: translateY(-8px) rotate(-45deg); }
+
+/* Mobile menu */
+@media (max-width:991px){
+  .burger{ display:block; }
+  .nav-links{
+    position:fixed; left:0; right:0; top:64px; transform:translateY(-120%);
+    background:#0B0B0F; border-top:1px solid rgba(255,255,255,.08);
+    display:flex; flex-direction:column; gap:14px; padding:18px 20px;
+    transition: transform .25s ease;
+  }
+  .nav-links.open{ transform:translateY(0); }
+  .nav-cta{ width:100%; text-align:center; }
+}
+
+/* Small tweaks */
+@media (max-width:991px){ .brand-logo{ height:36px; } }
+@media (max-width:767px){ .brand-logo{ height:32px; } }
+
+/* prefers-reduced-motion: kevesebb mozgás */
+@media (prefers-reduced-motion: reduce){
+  .brand-logo, .nav-link::after, .nav-links{ transition:none !important; }
+}
+
   </style>
 </head>
 <body id="top">
 
-  <!-- NAVBAR -->
-  <div class="nav-wrap" role="navigation" aria-label="Fő navigáció">
-    <div class="container nav">
-      <a href="#top" class="brand">
-  <img src="logo2.png" alt="onepunchgym" style="height:40px;display:block;">
-</a>
+ <!-- NAVBAR – One Punch GYM / Diamond Edition -->
+<div class="nav-wrap" role="navigation" aria-label="Fő navigáció">
+  <div class="container nav">
+    <!-- Logó -->
+    <a href="#top" class="brand-wrap" aria-label="Ugrás az oldal tetejére">
+      <img src="logo2.png" alt="One Punch GYM" class="brand-logo" height="42" width="auto">
+    </a>
 
+    <!-- Linkek -->
+    <nav class="nav-links" id="nav-links">
+      <a class="nav-link" href="#rolam">Rólam</a>
+      <a class="nav-link" href="#csomagok">Csomagok</a>
+      <a class="nav-link" href="#eredmenyek">Eredmények</a>
+      <a class="nav-link" href="#kapcsolat">Kapcsolat</a>
+      <a class="btn btn-primary nav-cta" href="#kapcsolat">Időpontot kérek</a>
+    </nav>
 
-      <nav class="nav-links" id="nav">
-        <a href="#rolam">Rólam</a>
-        <a href="#csomagok">Csomagok</a>
-        <a href="#eredmenyek">Eredmények</a>
-        <a href="#kapcsolat">Kapcsolat</a>
-        <a href="#kapcsolat" class="btn btn-primary nav-cta">Időpontot kérek</a>
-      </nav>
-
-      <button class="burger" aria-label="Menü" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
-    </div>
+    <!-- Burger -->
+    <button class="burger" id="burger" aria-label="Menü megnyitása" aria-controls="nav-links" aria-expanded="false">
+      <span></span>
+    </button>
   </div>
+</div>
+
 
   <!-- HERO -->
   <section class="hero" aria-label="Bevezető">
@@ -256,5 +349,41 @@
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
   </script>
+
+  <script>
+  // Sticky nav árnyék scrollra
+  (function(){
+    const nav = document.querySelector('.nav-wrap');
+    const onScroll = () => {
+      if (window.scrollY > 8) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    };
+    onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  })();
+
+  // Burger menü (ESC és kívülre kattintás is zár)
+  (function(){
+    const burger = document.getElementById('burger');
+    const menu   = document.getElementById('nav-links');
+    const toggle = (open) => {
+      const isOpen = open ?? !menu.classList.contains('open');
+      menu.classList.toggle('open', isOpen);
+      burger.setAttribute('aria-expanded', String(isOpen));
+    };
+    burger.addEventListener('click', () => toggle());
+
+    document.addEventListener('click', (e)=>{
+      if (!menu.classList.contains('open')) return;
+      if (!menu.contains(e.target) && e.target !== burger) toggle(false);
+    });
+
+    document.addEventListener('keydown',(e)=>{
+      if (e.key === 'Escape') toggle(false);
+    });
+
+    // Kattintás menüpontokra -> zárás
+    menu.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>toggle(false)));
+  })();
+</script>
+
 </body>
 </html>
