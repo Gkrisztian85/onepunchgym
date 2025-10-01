@@ -6,24 +6,18 @@
   <title>onepunchgym – Testépítés • Erő • Forma</title>
   <meta name="description" content="onepunchgym – személyre szabott testépítő edzéstervek és táplálkozási útmutató. Erő, forma, önbizalom." />
 
+  <!-- Favicon (opcionális) -->
   <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-<link rel="icon" type="image/png" sizes="16x16" href="logo.png">
-<link rel="apple-touch-icon" href="logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
 
-
-  <!-- Fonts -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --primary:#E11D48;        /* málna/piros */
-      --primary-d:#BE123C;      /* hover */
-      --secondary:#0EA5E9;      /* kék */
-      --dark:#0B0B0F;
-      --text:#0F172A;
-      --muted:#475569;
-      --light:#F8FAFC;
-      --maxw:1200px;
+      --primary:#E11D48; --primary-d:#BE123C; --secondary:#0EA5E9;
+      --dark:#0B0B0F; --text:#0F172A; --muted:#475569; --light:#F8FAFC; --maxw:1200px;
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
@@ -39,13 +33,13 @@
     @media (max-width:991px){.grid-3{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:767px){.grid-3{grid-template-columns:1fr}}
 
-    /* Typography – 3 heading + 1 paragraph */
+    /* Typography */
     .h1{font-size:48px;line-height:1.15;font-weight:800;letter-spacing:-0.01em;color:#fff;margin:0 0 12px}
     .h2{font-size:36px;line-height:1.2;font-weight:700;color:var(--text);margin:0 0 12px}
     .h3{font-size:24px;line-height:1.25;font-weight:700;color:var(--text);margin:0 0 8px}
     .p{font-size:18px;line-height:1.6;color:var(--text);margin:0 0 16px}
 
-    /* Buttons – primary/secondary + hover */
+    /* Buttons */
     .btn{display:inline-block;padding:12px 20px;border-radius:9999px;font-weight:700;border:2px solid transparent;transition:.2s transform,.2s box-shadow,.2s background-color,.2s color}
     .btn:active{transform:translateY(0)}
     .btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 18px rgba(225,29,72,.25)}
@@ -53,20 +47,84 @@
     .btn-secondary{background:transparent;color:var(--secondary);border-color:var(--secondary)}
     .btn-secondary:hover{background:var(--secondary);color:#fff}
 
-    /* Navbar */
-    .nav-wrap{position:sticky;top:0;z-index:100;background:rgba(11,11,15,.8);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
-    .nav{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:12px 24px}
-    .brand{color:#fff;font-weight:800;font-size:20px;letter-spacing:.02em}
-    .nav-links{display:flex;gap:20px;align-items:center}
-    .nav-links a{color:#e5e7eb;font-weight:600;opacity:.9}
-    .nav-links a:hover{opacity:1}
-    .nav-cta{margin-left:8px}
-    .burger{display:none;width:40px;height:40px;border:1px solid rgba(255,255,255,.18);border-radius:10px;color:#fff;background:transparent;cursor:pointer}
+    /* NAVBAR – Diamond (kisebb logó) */
+    .nav-wrap{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(11,11,15,.80);
+      backdrop-filter: blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      transition: box-shadow .25s ease, background-color .25s ease, border-color .25s ease;
+    }
+    .nav-wrap.scrolled{
+      background:rgba(11,11,15,.92);
+      box-shadow:0 10px 30px rgba(2,8,23,.25);
+      border-color: rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:24px;
+      padding:8px 24px;
+      min-height: 64px;
+    }
+
+    .brand-wrap{ display:flex; align-items:center; gap:10px; }
+    .brand-logo{
+      height:56px;               /* << itt a fő méret */
+      width:auto;
+      display:block;
+      image-rendering:-webkit-optimize-contrast;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,.55));
+      transition: transform .2s ease, filter .2s ease;
+    }
+    .brand-logo:hover{ transform:translateY(-1px) scale(1.03); filter: drop-shadow(0 3px 6px rgba(0,0,0,.6)); }
+
+    .nav-links{ display:flex; align-items:center; gap:20px; }
+    .nav-link{
+      color:#e5e7eb; font-weight:700; letter-spacing:.01em; position:relative; padding:8px 2px;
+      transition: color .2s ease;
+    }
+    .nav-link:hover{ color:#fff; }
+    .nav-link:focus-visible{ outline:2px solid #0EA5E9; outline-offset:3px; border-radius:6px; }
+    .nav-link::after{
+      content:""; position:absolute; left:0; bottom:0; height:2px; width:0;
+      background:linear-gradient(90deg,#E11D48,#0EA5E9);
+      transition:width .22s ease;
+    }
+    .nav-link:hover::after{ width:100%; }
+    .nav-cta{ margin-left:8px; }
+
+    /* Burger + mobil menü */
+    .burger{
+      display:none; width:42px; height:42px; border:1px solid rgba(255,255,255,.18);
+      border-radius:10px; background:transparent; cursor:pointer;
+      position:relative; transition:background .2s ease, border-color .2s ease;
+    }
+    .burger:focus-visible{ outline:2px solid #0EA5E9; outline-offset:3px; }
+    .burger span, .burger::before, .burger::after{
+      content:""; position:absolute; left:10px; right:10px; height:2px; background:#fff; border-radius:2px; transition:transform .2s ease, opacity .2s ease;
+    }
+    .burger span{ top:50%; transform:translateY(-50%); }
+    .burger::before{ top:12px; }
+    .burger::after{ bottom:12px; }
+    .burger[aria-expanded="true"] span{ opacity:0; }
+    .burger[aria-expanded="true"]::before{ transform: translateY(8px) rotate(45deg); }
+    .burger[aria-expanded="true"]::after{ transform: translateY(-8px) rotate(-45deg); }
+
     @media (max-width:991px){
-      .burger{display:block}
-      .nav-links{position:fixed;left:0;right:0;top:64px;bottom:auto;background:#0B0B0F;flex-direction:column;padding:24px;transform:translateY(-120%);transition:.25s;gap:16px;border-top:1px solid rgba(255,255,255,.06)}
-      .nav-links.open{transform:translateY(0)}
-      .nav-cta{width:100%;text-align:center}
+      .burger{ display:block; }
+      .nav-links{
+        position:fixed; left:0; right:0; top:64px; transform:translateY(-120%);
+        background:#0B0B0F; border-top:1px solid rgba(255,255,255,.08);
+        display:flex; flex-direction:column; gap:14px; padding:18px 20px;
+        transition: transform .25s ease;
+      }
+      .nav-links.open{ transform:translateY(0); }
+      .nav-cta{ width:100%; text-align:center; }
+      .brand-logo{ height:48px; }   /* tablet */
+    }
+    @media (max-width:767px){
+      .brand-logo{ height:40px; }   /* mobil */
+      .nav{ min-height:56px; padding:8px 16px; }
     }
 
     /* Hero */
@@ -75,10 +133,7 @@
       url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1800&auto=format&fit=crop') center/cover no-repeat;}
     .hero .container{min-height:90vh;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:24px}
     .lead{color:#e2e8f0;max-width:640px}
-    @media (max-width:991px){
-      .hero .container{grid-template-columns:1fr}
-      .h1{font-size:40px}
-    }
+    @media (max-width:991px){.hero .container{grid-template-columns:1fr}.h1{font-size:40px}}
     @media (max-width:767px){.h1{font-size:34px}}
 
     /* Cards section */
@@ -104,128 +159,30 @@
 
     /* Footer */
     .footer{padding:32px 0;border-top:1px solid #e5e7eb;color:var(--muted);font-size:14px;background:#fff}
-/* === ONEPUNCHGYM NAV – DIAMOND EDITION (TISZTA, KÖZEPES LOGÓ) === */
-.nav-wrap{
-  position:sticky; top:0; z-index:1000;
-  background:rgba(11,11,15,.80);
-  backdrop-filter: blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  transition: box-shadow .25s ease, background-color .25s ease, border-color .25s ease;
-}
-.nav-wrap.scrolled{
-  background:rgba(11,11,15,.92);
-  box-shadow:0 10px 30px rgba(2,8,23,.25);
-  border-color: rgba(255,255,255,.08);
-}
-.nav{
-  display:flex; align-items:center; justify-content:space-between; gap:24px;
-  padding:10px 24px;              /* kényelmes függőleges padding */
-  min-height: 84px;               /* nav sáv fix min magasság */
-}
-
-/* Logó – SZÉP, KÖZEPES MÉRET */
-.brand-wrap{ display:flex; align-items:center; gap:10px; }
-.brand-logo{
-  height: 84px;                   /* DESKTOP ideális méret */
-  width:auto; display:block;
-  image-rendering:-webkit-optimize-contrast;
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.55));
-  transition: transform .2s ease, filter .2s ease;
-}
-.brand-logo:hover{ transform:translateY(-1px) scale(1.03); filter: drop-shadow(0 3px 6px rgba(0,0,0,.6)); }
-
-/* Menülinkek */
-.nav-links{ display:flex; align-items:center; gap:20px; }
-.nav-link{
-  color:#e5e7eb; font-weight:700; letter-spacing:.01em; position:relative; padding:8px 2px;
-  transition: color .2s ease;
-}
-.nav-link:hover{ color:#fff; }
-.nav-link:focus-visible{ outline:2px solid #0EA5E9; outline-offset:3px; border-radius:6px; }
-.nav-link::after{
-  content:""; position:absolute; left:0; bottom:0; height:2px; width:0;
-  background:linear-gradient(90deg,#E11D48,#0EA5E9);
-  transition:width .22s ease;
-}
-.nav-link:hover::after{ width:100%; }
-.nav-cta{ margin-left:8px; }
-
-/* Burger */
-.burger{
-  display:none; width:42px; height:42px; border:1px solid rgba(255,255,255,.18);
-  border-radius:10px; background:transparent; cursor:pointer;
-  position:relative; transition:background .2s ease, border-color .2s ease;
-}
-.burger:focus-visible{ outline:2px solid #0EA5E9; outline-offset:3px; }
-.burger span, .burger::before, .burger::after{
-  content:""; position:absolute; left:10px; right:10px; height:2px; background:#fff; border-radius:2px; transition:transform .2s ease, opacity .2s ease;
-}
-.burger span{ top:50%; transform:translateY(-50%); }
-.burger::before{ top:12px; }
-.burger::after{ bottom:12px; }
-.burger[aria-expanded="true"] span{ opacity:0; }
-.burger[aria-expanded="true"]::before{ transform: translateY(8px) rotate(45deg); }
-.burger[aria-expanded="true"]::after{ transform: translateY(-8px) rotate(-45deg); }
-
-/* Mobile menu + logó skálázás */
-@media (max-width:991px){
-  .burger{ display:block; }
-  .nav-links{
-    position:fixed; left:0; right:0; top:84px; transform:translateY(-120%);
-    background:#0B0B0F; border-top:1px solid rgba(255,255,255,.08);
-    display:flex; flex-direction:column; gap:14px; padding:18px 20px;
-    transition: transform .25s ease;
-  }
-  .nav-links.open{ transform:translateY(0); }
-  .nav-cta{ width:100%; text-align:center; }
-  .brand-logo{ height: 64px; }    /* TABLET */
-}
-
-@media (max-width:767px){
-  .brand-logo{ height: 48px; }    /* MOBIL */
-  .nav{ min-height: 64px; padding:8px 16px; }
-}
-
-/* Kevesebb mozgás beállítás */
-@media (prefers-reduced-motion: reduce){
-  .brand-logo, .nav-link::after, .nav-links{ transition:none !important; }
-}
-
-
   </style>
 </head>
 <body id="top">
 
-<!-- NAVBAR – One Punch GYM / Diamond Edition (közepes logó) -->
-<div class="nav-wrap" role="navigation" aria-label="Fő navigáció">
-  <div class="container nav">
-    <!-- Logó -->
-    <a href="#top" class="brand-wrap" aria-label="Ugrás az oldal tetejére">
-      <img
-        src="logo2.png"
-        alt="One Punch GYM"
-        class="brand-logo"
-        srcset="logo2.png 1x, logo2.png 2x">
-    </a>
+  <!-- NAVBAR -->
+  <div class="nav-wrap" role="navigation" aria-label="Fő navigáció">
+    <div class="container nav">
+      <a href="#top" class="brand-wrap" aria-label="Ugrás az oldal tetejére">
+        <img src="logo2.png" alt="One Punch GYM" class="brand-logo" srcset="logo2.png 1x, logo2.png 2x">
+      </a>
 
-    <!-- Linkek -->
-    <nav class="nav-links" id="nav-links">
-      <a class="nav-link" href="#rolam">Rólam</a>
-      <a class="nav-link" href="#csomagok">Csomagok</a>
-      <a class="nav-link" href="#eredmenyek">Eredmények</a>
-      <a class="nav-link" href="#kapcsolat">Kapcsolat</a>
-      <a class="btn btn-primary nav-cta" href="#kapcsolat">Időpontot kérek</a>
-    </nav>
+      <nav class="nav-links" id="nav-links">
+        <a class="nav-link" href="#rolam">Rólam</a>
+        <a class="nav-link" href="#csomagok">Csomagok</a>
+        <a class="nav-link" href="#eredmenyek">Eredmények</a>
+        <a class="nav-link" href="#kapcsolat">Kapcsolat</a>
+        <a class="btn btn-primary nav-cta" href="#kapcsolat">Időpontot kérek</a>
+      </nav>
 
-    <!-- Burger -->
-    <button class="burger" id="burger" aria-label="Menü megnyitása" aria-controls="nav-links" aria-expanded="false">
-      <span></span>
-    </button>
+      <button class="burger" id="burger" aria-label="Menü megnyitása" aria-controls="nav-links" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
   </div>
-</div>
-
-
 
   <!-- HERO -->
   <section class="hero" aria-label="Bevezető">
@@ -242,7 +199,7 @@
     </div>
   </section>
 
-  <!-- CSOMAGOK / KÁRTYÁK -->
+  <!-- CSOMAGOK -->
   <section class="cards" id="csomagok" aria-label="Csomagok">
     <div class="container">
       <h2 class="h2">Csomagok</h2>
@@ -285,7 +242,7 @@
     </div>
   </section>
 
-  <!-- RÓLAM / EREDMÉNYEK (tetszőleges szakasz) -->
+  <!-- RÓLAM -->
   <section class="about" id="rolam" aria-label="Rólam és eredmények">
     <div class="container">
       <div class="grid" style="display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center">
@@ -308,7 +265,7 @@
     </div>
   </section>
 
-  <!-- EREDMÉNYEK mini-szekció (scroll anchorhez) -->
+  <!-- EREDMÉNYEK -->
   <section id="eredmenyek" aria-label="Ügyfél-eredmények">
     <div class="container">
       <h2 class="h2">Ügyfél-eredmények</h2>
@@ -323,7 +280,6 @@
       <h2 class="h2">Kapcsolat</h2>
       <p class="p">Írj üzenetet vagy kérj visszahívást – 24 órán belül válaszolunk.</p>
 
-      <!-- Figyelem: GitHub Pages nem küld e-mailt; használj mailto-t vagy később form backend-et -->
       <form class="form" action="mailto:info@onepunchgym.hu" method="post" enctype="text/plain">
         <input class="input" type="text" name="name" placeholder="Név" required>
         <input class="input" type="email" name="email" placeholder="E-mail" required>
@@ -351,45 +307,42 @@
     </div>
   </footer>
 
-  <!-- Minimal JS: burger + évszám -->
+  <!-- JS -->
   <script>
+    // Évszám
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Sticky nav árnyék scrollra
+    (function(){
+      const nav = document.querySelector('.nav-wrap');
+      const onScroll = () => {
+        if (window.scrollY > 8) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+      };
+      onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+    })();
+
+    // Burger menü (ESC és kívülre kattintás is zár)
+    (function(){
+      const burger = document.getElementById('burger');
+      const menu   = document.getElementById('nav-links');
+      const toggle = (open) => {
+        const isOpen = open ?? !menu.classList.contains('open');
+        menu.classList.toggle('open', isOpen);
+        burger.setAttribute('aria-expanded', String(isOpen));
+      };
+      burger.addEventListener('click', () => toggle());
+
+      document.addEventListener('click', (e)=>{
+        if (!menu.classList.contains('open')) return;
+        if (!menu.contains(e.target) && e.target !== burger) toggle(false);
+      });
+
+      document.addEventListener('keydown',(e)=>{
+        if (e.key === 'Escape') toggle(false);
+      });
+
+      menu.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>toggle(false)));
+    })();
   </script>
-
-  <script>
-  // Sticky nav árnyék scrollra
-  (function(){
-    const nav = document.querySelector('.nav-wrap');
-    const onScroll = () => {
-      if (window.scrollY > 8) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
-    };
-    onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
-  })();
-
-  // Burger menü (ESC és kívülre kattintás is zár)
-  (function(){
-    const burger = document.getElementById('burger');
-    const menu   = document.getElementById('nav-links');
-    const toggle = (open) => {
-      const isOpen = open ?? !menu.classList.contains('open');
-      menu.classList.toggle('open', isOpen);
-      burger.setAttribute('aria-expanded', String(isOpen));
-    };
-    burger.addEventListener('click', () => toggle());
-
-    document.addEventListener('click', (e)=>{
-      if (!menu.classList.contains('open')) return;
-      if (!menu.contains(e.target) && e.target !== burger) toggle(false);
-    });
-
-    document.addEventListener('keydown',(e)=>{
-      if (e.key === 'Escape') toggle(false);
-    });
-
-    // Kattintás menüpontokra -> zárás
-    menu.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>toggle(false)));
-  })();
-</script>
-
 </body>
 </html>
