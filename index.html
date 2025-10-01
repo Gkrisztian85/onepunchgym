@@ -104,8 +104,7 @@
 
     /* Footer */
     .footer{padding:32px 0;border-top:1px solid #e5e7eb;color:var(--muted);font-size:14px;background:#fff}
-
-    /* === ONEPUNCHGYM NAV – DIAMOND EDITION === */
+/* === ONEPUNCHGYM NAV – DIAMOND EDITION (TISZTA, KÖZEPES LOGÓ) === */
 .nav-wrap{
   position:sticky; top:0; z-index:1000;
   background:rgba(11,11,15,.80);
@@ -120,49 +119,37 @@
 }
 .nav{
   display:flex; align-items:center; justify-content:space-between; gap:24px;
-  padding:8px 24px;
+  padding:10px 24px;              /* kényelmes függőleges padding */
+  min-height: 84px;               /* nav sáv fix min magasság */
 }
 
+/* Logó – SZÉP, KÖZEPES MÉRET */
 .brand-wrap{ display:flex; align-items:center; gap:10px; }
-.brand-logo {
-  height: 350;       /* 3x nagyobb desktopon */
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,.55));
+.brand-logo{
+  height: 84px;                   /* DESKTOP ideális méret */
+  width:auto; display:block;
+  image-rendering:-webkit-optimize-contrast;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.55));
   transition: transform .2s ease, filter .2s ease;
 }
+.brand-logo:hover{ transform:translateY(-1px) scale(1.03); filter: drop-shadow(0 3px 6px rgba(0,0,0,.6)); }
 
-/* Tablet */
-@media (max-width: 991px) {
-  .brand-logo { height: 54px; }
-}
-
-/* Mobil */
-@media (max-width: 767px) {
-  .brand-logo { height: 42px; }
-}
-
-.brand-logo:hover{ transform:translateY(-1px) scale(1.04); filter: drop-shadow(0 3px 6px rgba(0,0,0,.6)); }
-
+/* Menülinkek */
 .nav-links{ display:flex; align-items:center; gap:20px; }
 .nav-link{
   color:#e5e7eb; font-weight:700; letter-spacing:.01em; position:relative; padding:8px 2px;
   transition: color .2s ease;
 }
 .nav-link:hover{ color:#fff; }
-.nav-link:focus-visible{
-  outline:2px solid #0EA5E9; outline-offset:3px; border-radius:6px;
-}
+.nav-link:focus-visible{ outline:2px solid #0EA5E9; outline-offset:3px; border-radius:6px; }
 .nav-link::after{
   content:""; position:absolute; left:0; bottom:0; height:2px; width:0;
   background:linear-gradient(90deg,#E11D48,#0EA5E9);
   transition:width .22s ease;
 }
 .nav-link:hover::after{ width:100%; }
-
-.nav-cta{
-  margin-left:8px;
-}
+.nav-cta{ margin-left:8px; }
 
 /* Burger */
 .burger{
@@ -181,38 +168,45 @@
 .burger[aria-expanded="true"]::before{ transform: translateY(8px) rotate(45deg); }
 .burger[aria-expanded="true"]::after{ transform: translateY(-8px) rotate(-45deg); }
 
-/* Mobile menu */
+/* Mobile menu + logó skálázás */
 @media (max-width:991px){
   .burger{ display:block; }
   .nav-links{
-    position:fixed; left:0; right:0; top:64px; transform:translateY(-120%);
+    position:fixed; left:0; right:0; top:84px; transform:translateY(-120%);
     background:#0B0B0F; border-top:1px solid rgba(255,255,255,.08);
     display:flex; flex-direction:column; gap:14px; padding:18px 20px;
     transition: transform .25s ease;
   }
   .nav-links.open{ transform:translateY(0); }
   .nav-cta{ width:100%; text-align:center; }
+  .brand-logo{ height: 64px; }    /* TABLET */
 }
 
-/* Small tweaks */
-@media (max-width:991px){ .brand-logo{ height:36px; } }
-@media (max-width:767px){ .brand-logo{ height:32px; } }
+@media (max-width:767px){
+  .brand-logo{ height: 48px; }    /* MOBIL */
+  .nav{ min-height: 64px; padding:8px 16px; }
+}
 
-/* prefers-reduced-motion: kevesebb mozgás */
+/* Kevesebb mozgás beállítás */
 @media (prefers-reduced-motion: reduce){
   .brand-logo, .nav-link::after, .nav-links{ transition:none !important; }
 }
+
 
   </style>
 </head>
 <body id="top">
 
- <!-- NAVBAR – One Punch GYM / Diamond Edition -->
+<!-- NAVBAR – One Punch GYM / Diamond Edition (közepes logó) -->
 <div class="nav-wrap" role="navigation" aria-label="Fő navigáció">
   <div class="container nav">
     <!-- Logó -->
     <a href="#top" class="brand-wrap" aria-label="Ugrás az oldal tetejére">
-      <img src="logo2.png" alt="One Punch GYM" class="brand-logo" height="350" width="auto">
+      <img
+        src="logo2.png"
+        alt="One Punch GYM"
+        class="brand-logo"
+        srcset="logo2.png 1x, logo2.png 2x">
     </a>
 
     <!-- Linkek -->
@@ -230,6 +224,7 @@
     </button>
   </div>
 </div>
+
 
 
   <!-- HERO -->
